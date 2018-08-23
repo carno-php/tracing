@@ -1,0 +1,22 @@
+{
+  "name": "carno-php/tracing",
+  "license": "MIT",
+  "require": {
+    "carno-php/container": "^1.0",
+    "moolex/opentracing": "0.9.171115"
+  },
+  "suggest": {
+    "carno-php/traced": "Make spans data transport to zipkin/jaeger"
+  },
+  "autoload": {
+    "psr-4": {
+      "Carno\\Tracing\\": "src"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
+}
