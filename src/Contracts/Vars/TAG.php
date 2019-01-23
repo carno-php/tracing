@@ -42,9 +42,9 @@ interface TAG
      */
 
     public const HOSTNAME = 'hostname';
-    public const DEV_LANG = 'dev.lang';
-    public const ENV_TAGS = 'env.tags';
-    public const ROUTE_TAGS = 'route.tags';
+    public const LANG_EXE = 'lang.exec';
+    public const ENV_TAGS = 'tags.env';
+    public const ROUTE_TAGS = 'tags.route';
     public const USER_AGENT = 'user.agent';
     public const CONTENT_TYPE = 'content.type';
 }
