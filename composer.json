@@ -5,12 +5,20 @@
     "carno-php/container": "^1.0",
     "moolex/opentracing": "0.9.171115"
   },
+  "require-dev": {
+    "carno-php/coroutine": "^1.0"
+  },
   "suggest": {
     "carno-php/traced": "Make spans data transport to zipkin/jaeger"
   },
   "autoload": {
     "psr-4": {
       "Carno\\Tracing\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Carno\\Tracing\\Tests\\": "tests"
     }
   },
   "minimum-stability": "dev",
