@@ -32,6 +32,11 @@ class PlatformSwap implements Platform
         };
     }
 
+    public function init() : Promised
+    {
+        return Promise::resolved();
+    }
+
     public function joined() : bool
     {
         return true;
@@ -71,7 +76,7 @@ class PlatformSwap implements Platform
         return $this->transporter = new class implements Transport {
             private $data = [];
 
-            public function connect(Address $endpoint) : void
+            public function connect(Address $endpoint, string $identify = null) : void
             {
             }
 

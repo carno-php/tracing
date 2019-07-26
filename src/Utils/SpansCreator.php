@@ -152,7 +152,7 @@ trait SpansCreator
              */
             $span = $context->get(CTX::G_SPAN);
             $span->setTags($tags);
-            $span->finish($this->microseconds());
+            $span->finish();
             $this->endingSpan($context);
         }
     }
@@ -169,14 +169,15 @@ trait SpansCreator
              * @var Span $span
              */
             $span = $context->get(CTX::G_SPAN);
-            $span->setTags(array_merge([TAG::ERROR => 'true'], $tags));
-            $span->finish($this->microseconds(), [[
+            $span->setTags(array_merge([TAG::ERROR => true], $tags));
+            $span->log([
                 LOG::EVENT => TAG::ERROR,
                 LOG::ERROR_KIND => get_class($err),
                 LOG::ERROR_OBJECT => $err,
                 LOG::MESSAGE => $err->getMessage(),
                 LOG::STACK => $err->getTraceAsString(),
-            ]]);
+            ]);
+            $span->finish();
             $this->endingSpan($context);
         }
     }

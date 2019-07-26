@@ -9,19 +9,19 @@
 namespace Carno\Tracing\Utils;
 
 use Carno\Coroutine\Context;
-use Carno\HTTP\Standard\Message;
 use Carno\Tracing\Contracts\Vars\CTX;
 use Carno\Tracing\Contracts\Vars\FMT;
 use Carno\Tracing\Standard\Span;
 use Carno\Tracing\Standard\Tracer;
+use Psr\Http\Message\MessageInterface;
 
 trait SpansExporter
 {
     /**
      * @param Context $ctx
-     * @param Message $http
+     * @param MessageInterface $http
      */
-    protected function spanToHResponse(Context $ctx, Message $http) : void
+    protected function spanToHResponse(Context $ctx, MessageInterface $http) : void
     {
         if ($ctx->has(CTX::G_TRACER) && $ctx->has(CTX::G_SPAN)) {
             /**

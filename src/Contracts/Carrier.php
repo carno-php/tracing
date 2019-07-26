@@ -8,11 +8,11 @@
 
 namespace Carno\Tracing\Contracts;
 
-use Carno\HTTP\Standard\Message;
 use Carno\Tracing\Contracts\CC\Extractor;
 use Carno\Tracing\Contracts\CC\Generator;
 use Carno\Tracing\Contracts\CC\Injector;
 use Carno\Tracing\Standard\Context;
+use Psr\Http\Message\MessageInterface;
 
 interface Carrier extends Extractor, Injector, Generator
 {
@@ -23,8 +23,8 @@ interface Carrier extends Extractor, Injector, Generator
     public function ctx(Context $context) : Carrier;
 
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      * @return static
      */
-    public function http(Message $message) : Carrier;
+    public function http(MessageInterface $message) : Carrier;
 }

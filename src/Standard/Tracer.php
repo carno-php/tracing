@@ -8,7 +8,6 @@
 
 namespace Carno\Tracing\Standard;
 
-use Carno\HTTP\Standard\Message;
 use Carno\Tracing\Chips\RootInitializer;
 use Carno\Tracing\Contracts\Platform;
 use Carno\Tracing\Contracts\Vars\FMT;
@@ -19,6 +18,7 @@ use OpenTracing\Span as OpenSpan;
 use OpenTracing\SpanContext;
 use OpenTracing\SpanOptions;
 use OpenTracing\Tracer as TracerAPI;
+use Psr\Http\Message\MessageInterface;
 
 class Tracer implements TracerAPI
 {
@@ -81,7 +81,7 @@ class Tracer implements TracerAPI
     {
         switch ($format) {
             case FMT::HTTP_HEADERS:
-                if ($carrier instanceof Message) {
+                if ($carrier instanceof MessageInterface) {
                     $this->platform->carrier()->http($carrier)->fusedContext($spanContext);
                 } else {
                     throw UnsupportedCarrierInstance::for(gettype($carrier));
@@ -103,7 +103,7 @@ class Tracer implements TracerAPI
             case FMT::PREV_CTX:
                 return $this->platform->carrier()->ctx($carrier)->fusedContext();
             case FMT::HTTP_HEADERS:
-                if ($carrier instanceof Message) {
+                if ($carrier instanceof MessageInterface) {
                     return $this->platform->carrier()->http($carrier)->fusedContext();
                 }
                 throw SpanContextNotFound::create();

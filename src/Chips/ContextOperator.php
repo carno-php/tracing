@@ -11,24 +11,25 @@ namespace Carno\Tracing\Chips;
 use Carno\Tracing\Contracts\Vars\CTX;
 use Carno\Tracing\Standard\Context;
 use OpenTracing\Exceptions\SpanContextNotFound;
+use OpenTracing\SpanContext;
 
 trait ContextOperator
 {
     use IDGenerator;
 
     /**
-     * @param Context|null $in
-     * @return Context
+     * @param SpanContext|null $in
+     * @return SpanContext
      */
-    public function fusedContext(Context $in = null) : Context
+    public function fusedContext(SpanContext $in = null) : SpanContext
     {
         return $in ? $this->initFromContext($in) : $this->toNewContext();
     }
 
     /**
-     * @return Context
+     * @return SpanContext
      */
-    protected function toNewContext() : Context
+    protected function toNewContext() : SpanContext
     {
         if (empty($traceID = $this->getTraceID())) {
             throw SpanContextNotFound::create();
@@ -45,10 +46,10 @@ trait ContextOperator
     }
 
     /**
-     * @param Context $ctx
-     * @return Context
+     * @param SpanContext $ctx
+     * @return SpanContext
      */
-    protected function initFromContext(Context $ctx) : Context
+    protected function initFromContext(SpanContext $ctx) : SpanContext
     {
         $this->setTraceID($ctx[CTX::TRACE_ID] ?? '');
         $this->setSpanID($ctx[CTX::SPAN_ID] ?? '');

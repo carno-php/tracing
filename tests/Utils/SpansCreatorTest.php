@@ -26,14 +26,14 @@ class SpansCreatorTest extends TestCase
     public function testCreatingNormal()
     {
         $this->newSpan(
-            $ctx = new Context,
+            $ctx = new Context(),
             $op = sprintf('name.%d', rand(1000, 9999)),
             ['t1' => 'v1', 't2' => 'v2'],
             ['l1' => 'v1', 'l2' => 'v2'],
             null,
             null,
             null,
-            $swap = new PlatformSwap
+            $swap = new PlatformSwap()
         );
 
         $this->closeSpan($ctx, ['t3' => 'v3']);
@@ -62,17 +62,17 @@ class SpansCreatorTest extends TestCase
     public function testCreatingError()
     {
         $this->newSpan(
-            $ctx = new Context,
+            $ctx = new Context(),
             $op = sprintf('name.%d', rand(1000, 9999)),
             [],
             [],
             null,
             null,
             null,
-            $swap = new PlatformSwap
+            $swap = new PlatformSwap()
         );
 
-        $this->errorSpan($ctx, new Exception($msg = sprintf('test.'.rand(1000, 9999))), ['et' => 'yes']);
+        $this->errorSpan($ctx, new Exception($msg = sprintf('test.' . rand(1000, 9999))), ['et' => 'yes']);
 
         $dat = json_decode($swap->transporter()->data()[0], true);
 

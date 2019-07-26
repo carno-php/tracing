@@ -18,6 +18,11 @@ interface Platform
     public function env() : Env;
 
     /**
+     * @return Promised
+     */
+    public function init() : Promised;
+
+    /**
      * @return bool
      */
     public function joined() : bool;

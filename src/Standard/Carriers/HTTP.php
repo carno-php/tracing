@@ -9,9 +9,9 @@
 namespace Carno\Tracing\Standard\Carriers;
 
 use Carno\HTTP\Standard\Helper;
-use Carno\HTTP\Standard\Message;
 use Carno\Tracing\Chips\StandardCC;
 use Carno\Tracing\Contracts\Carrier;
+use Psr\Http\Message\MessageInterface;
 
 class HTTP implements Carrier
 {
@@ -33,24 +33,24 @@ class HTTP implements Carrier
     private const EXT_SAMPLED = 'sampled';
 
     /**
-     * @var Message
+     * @var MessageInterface
      */
     private $message = null;
 
     /**
      * HTTP constructor.
-     * @param Message $message
+     * @param MessageInterface $message
      */
-    public function __construct(Message $message = null)
+    public function __construct(MessageInterface $message = null)
     {
         $this->message = $message;
     }
 
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      * @return Carrier
      */
-    public function http(Message $message) : Carrier
+    public function http(MessageInterface $message) : Carrier
     {
         return new static($message);
     }

@@ -8,13 +8,13 @@
 
 namespace Carno\Tracing\Contracts\CC;
 
-use Carno\Tracing\Standard\Context;
+use OpenTracing\SpanContext;
 
 interface Generator
 {
     /**
-     * @param Context $in
-     * @return Context
+     * @param SpanContext $in
+     * @return SpanContext
      */
-    public function fusedContext(Context $in = null) : Context;
+    public function fusedContext(SpanContext $in = null) : SpanContext;
 }
