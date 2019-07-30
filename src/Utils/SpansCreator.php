@@ -53,6 +53,7 @@ trait SpansCreator
      * @param mixed $exaCarrier
      * @param SpanContext $exaContext
      * @param Platform $platform
+     * @param int $timestamp
      */
     protected function newSpan(
         Context $context,
@@ -62,7 +63,8 @@ trait SpansCreator
         string $exaFormat = null,
         $exaCarrier = null,
         SpanContext $exaContext = null,
-        Platform $platform = null
+        Platform $platform = null,
+        int $timestamp = null
     ) : void {
         if (is_null($platform)) {
             if (DI::has(Platform::class)) {
@@ -87,7 +89,7 @@ trait SpansCreator
 
         // options
         $options = [
-            'start_time' => $this->microseconds(),
+            'start_time' => $timestamp ?? $this->microseconds(),
             'tags' => array_merge($platform->env()->tags(), $tags),
         ];
 
@@ -143,8 +145,9 @@ trait SpansCreator
     /**
      * @param Context $context
      * @param array $tags
+     * @param int $time
      */
-    protected function closeSpan(Context $context, array $tags = []) : void
+    protected function closeSpan(Context $context, array $tags = [], int $time = null) : void
     {
         if ($context->has(CTX::G_SPAN)) {
             /**
@@ -152,7 +155,7 @@ trait SpansCreator
              */
             $span = $context->get(CTX::G_SPAN);
             $span->setTags($tags);
-            $span->finish();
+            $span->finish($time);
             $this->endingSpan($context);
         }
     }
@@ -161,8 +164,9 @@ trait SpansCreator
      * @param Context $context
      * @param Throwable $err
      * @param array $tags
+     * @param int $time
      */
-    protected function errorSpan(Context $context, Throwable $err = null, array $tags = []) : void
+    protected function errorSpan(Context $context, Throwable $err = null, array $tags = [], int $time = null) : void
     {
         if ($context->has(CTX::G_SPAN)) {
             /**
@@ -177,7 +181,7 @@ trait SpansCreator
                 LOG::MESSAGE => $err->getMessage(),
                 LOG::STACK => $err->getTraceAsString(),
             ]);
-            $span->finish();
+            $span->finish($time);
             $this->endingSpan($context);
         }
     }
