@@ -25,6 +25,8 @@ class SpansCreatorTest extends TestCase
 
     public function testCreatingNormal()
     {
+        define('TRACING_ID_128BIT', 1);
+
         $this->newSpan(
             $ctx = new Context(),
             $op = sprintf('name.%d', rand(1000, 9999)),
